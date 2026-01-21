@@ -1,3 +1,4 @@
+// Clases, constructores y métodos
 class Viaje {
     constructor(codigo, destino, precio, disponibilidad = true) {
         this.codigo = codigo;
@@ -83,3 +84,54 @@ console.log(reserva1.getResumen());
 let listaClientes = [];
 let listaViajes = [];
 let listaReservas = [];
+
+// Agregar clientes
+function agregarCliente() {
+    // Leemos los valores de los inputs usando los id del HTML
+    const nombre = document.getElementById('cliente-nombre').value;
+    const apellido = document.getElementById('cliente-apellido').value;
+    const email = document.getElementById('cliente-email').value;
+    const telefono = document.getElementById('cliente-telefono').value;
+
+    // Comprobamos que no estén vacíos
+    if (nombre !== "" && apellido !== "") {
+        
+        // Creamos el objeto cliente
+        const nuevoCliente = new Cliente(nombre, apellido, email, telefono);
+        
+        // Lo guardamos en la lista
+        listaClientes.push(nuevoCliente);
+        
+        mostrarClientesEnTabla();
+        
+        document.getElementById('cliente-nombre').value = "";
+        document.getElementById('cliente-apellido').value = "";
+        document.getElementById('cliente-email').value = "";
+        document.getElementById('cliente-telefono').value = "";
+
+    } else {
+        alert("No están todos los campos completos");
+    }
+}
+
+// Mostrar los clientes agregado
+function mostrarClientesEnTabla() {
+    // Buscamos el tbody por su id
+    const cuerpoTabla = document.getElementById('tabla-clientes');
+    
+    // Lo vaciamos antes que nada
+    cuerpoTabla.innerHTML = ""; 
+
+    // Creamos las filas
+    listaClientes.forEach(cliente => {
+        const fila = `
+            <tr>
+                <td>${cliente.nombre}</td>
+                <td>${cliente.apellido}</td>
+                <td>${cliente.email}</td>
+                <td>${cliente.telefono}</td>
+            </tr>
+        `;
+        cuerpoTabla.innerHTML += fila;
+    });
+}
