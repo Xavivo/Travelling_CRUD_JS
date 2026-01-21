@@ -78,3 +78,8 @@ console.log(cliente1.getResumen());
 console.log(vuelo1.getInfo());
 console.log(paquete1.getInfo());
 console.log(reserva1.getResumen());
+
+// Variables globales
+let listaClientes = [];
+let listaViajes = [];
+let listaReservas = [];
