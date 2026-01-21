@@ -9,20 +9,20 @@
   <title>Travel CRUD</title>
 </head>
 
-<body class="gap-5 m-5">
+<body class=" container gap-5 m-5">
   <table class="table table-bordered">
     <h1>Clientes</h1>
     <!--Inputs-->
     <div class="input-group flex-nowrap gap-5 p-2">
       <input type="text" class="form-control" placeholder="Nombre" aria-label="Username"
         aria-describedby="addon-wrapping" />
-      <input type="text" class="form-control" placeholder="Apellido" aria-label="Username"
+      <input type="text" class="form-control" placeholder="Apellido" aria-label="Apellido"
         aria-describedby="addon-wrapping" />
-      <input type="text" class="form-control" placeholder="Correo electrónico" aria-label="Username"
+      <input type="text" class="form-control" placeholder="Correo electrónico" aria-label="gmail"
         aria-describedby="addon-wrapping" />
-      <input type="text" class="form-control" placeholder="Teléfono" aria-label="Username"
+      <input type="text" class="form-control" placeholder="Teléfono" aria-label="Teléfono"
         aria-describedby="addon-wrapping" />
-      <button type="button" class="btn btn-secondary">Añadir cliente</button>
+      <button type="button" class="btn btn-secondary" onclick="agregarCliente()">Añadir cliente</button>
     </div>
 
     <thead>
@@ -34,14 +34,7 @@
         <th scope="col">Acciones</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        
-      </tr>
-      <tr>
-        
-      </tr>
-      
+    <tbody id="tabla-clientes">  
     </tbody>
   </table>
 
@@ -49,22 +42,22 @@
     <h1>Viajes</h1>
     <!--Inputs-->
     <div class="input-group flex-nowrap gap-5 p-2">
-      <input type="text" class="form-control" placeholder="Código" aria-label="Username"
+      <input type="text" class="form-control" placeholder="Código" aria-label="Código"
         aria-describedby="addon-wrapping" />
-      <input type="text" class="form-control" placeholder="Destino" aria-label="Username"
+      <input type="text" class="form-control" placeholder="Destino" aria-label="Destino"
         aria-describedby="addon-wrapping" />
-      <input type="text" class="form-control" placeholder="Precio" aria-label="Username"
+      <input type="text" class="form-control" placeholder="Precio" aria-label="Precio"
         aria-describedby="addon-wrapping" />
 
-      <div class="col-md-1">
-        <select id="viaje-tipo" class="form-select">
-          <option value="base">Tipo de viaje</option>
+      <div class="col-md-1.5">
+        <select id="viaje-tipo" class="form-select" onchange="toggleCamposViaje()">
+          <option value="base">Estándar</option>
           <option value="vuelo">Vuelo</option>
           <option value="hotel">Hotel</option>
         </select>
       </div>
 
-      <button type="button" class="btn btn-secondary">Añadir viaje</button>
+      <button type="button" class="btn btn-secondary" onclick="agregarViaje()">Añadir viaje</button>
     </div>
     <thead>
       <tr class="table-dark">
@@ -75,14 +68,7 @@
         <th scope="col">Acciones</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        
-      </tr>
-      <tr>
-        
-      </tr>
-      
+    <tbody id="tabla-viajes">
     </tbody>
   </table>
 
@@ -104,7 +90,7 @@
           <option value="hotel">Prueba2</option>
         </select>
       </div>
-      <button type="button" class="btn btn-secondary">Añadir cliente</button>
+      <button type="button" class="btn btn-secondary" onclick="crearReserva()">Crear reserva</button>
     </div>
     <thead>
       <tr class="table-dark">
@@ -114,14 +100,7 @@
         <th scope="col">Acciones</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        
-      </tr>
-      <tr>
-        
-      </tr>
-      
+    <tbody id="tabla-reservas">
     </tbody>
   </table>
 
