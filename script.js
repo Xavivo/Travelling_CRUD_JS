@@ -168,7 +168,9 @@ function agregarViaje() {
     const precio = document.getElementById('viaje-precio').value;
     const tipo = document.getElementById('viaje-tipo').value;
 
-    // Validación básica
+    // Validaciones
+
+    // Comprobamos que no estén vacíos
     if (codigo === "" || destino === "" || precio === "") {
         alert("Faltan datos básicos del viaje.");
         return;
@@ -183,11 +185,11 @@ function agregarViaje() {
     let nuevoViaje; // Aquí guardaremos el viaje que se añada
 
     if (tipo === 'paquete') {
-        // Para paquetes, usamos la clase Paquete
+        // Para paquetes, usamos la clase paquete
         nuevoViaje = new Paquete(codigo, destino, precio, null, null);
         nuevoViaje.tipo = "Paquete";
     } else if (tipo === 'sin-paquete') {
-        // Para sin paquete, usamos la clase base Viaje
+        // Para sin paquete, usamos la clase base viaje
         nuevoViaje = new Viaje(codigo, destino, precio);
         nuevoViaje.tipo = "Sin paquete";
     } else {
@@ -224,4 +226,16 @@ function agregarReserva() {
     const clienteReserva = document.getElementById('cliente-nombre').value; // Cliente añadido anteriormente
     const viajeReserva = document.getElementById('viaje-destino').value; // Destino añadido anteriormente
     const fechaReserva = Date.now();
+
+    // Validaciones
+
+    // Comprobamos que no estén vacíos
+    if (clienteReserva === "" || viajeReserva === "") {
+        alert("Faltan datos básicos de la reserva.");
+        return;
+    }
+
+    let nuevoReserva; // Aquí guardaremos la reserva que se añada
+
 }
+
