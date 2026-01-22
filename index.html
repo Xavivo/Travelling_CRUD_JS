@@ -46,7 +46,7 @@
         aria-describedby="addon-wrapping" />
       <input type="text" id="viaje-destino" class="form-control" placeholder="Destino" aria-label="Destino"
         aria-describedby="addon-wrapping" />
-      <input type="text" id="viaje-precio" class="form-control" placeholder="Precio" aria-label="Precio"
+      <input type="number" id="viaje-precio" class="form-control" placeholder="Precio (En €)" aria-label="Precio"
         aria-describedby="addon-wrapping" />
 
       <div class="col-md-1.5">
@@ -79,15 +79,11 @@
       <div class="col-md-1.5">
         <select id="seleccionar-cliente" class="form-select">
           <option value="base">Seleccionar cliente</option>
-          <option value="vuelo">Prueba1</option>
-          <option value="hotel">Prueba2</option>
         </select>
       </div>
       <div class="col-md-1.5">
         <select id="seleccionar-viaje" class="form-select">
           <option value="base">Seleccionar viaje</option>
-          <option value="vuelo">Prueba1</option>
-          <option value="hotel">Prueba2</option>
         </select>
       </div>
       <button type="button" class="btn btn-info" onclick="crearReserva()">Crear reserva</button>

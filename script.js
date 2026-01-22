@@ -71,6 +71,8 @@ let listaClientes = [];
 let listaViajes = [];
 let listaReservas = [];
 
+// Anotación: ambas funciones mostrar están definidas aquí ya que, estando dentro de ambas funciones agregar no los encontraba.
+
 // Mostrar tabla de clientes
 function mostrarTablaClientes() {
     // Buscamos el tbody por su id
@@ -113,7 +115,8 @@ function mostrarTablaViajes() {
     });
 }
 
-// Agregar clientes
+
+// CLIENTE
 function agregarCliente() {
     // Leemos los valores de los inputs usando los id del HTML
     const nombre = document.getElementById('cliente-nombre').value;
@@ -157,6 +160,8 @@ function agregarCliente() {
     }
 }
 
+
+// VIAJE
 function agregarViaje() {
     const codigo = document.getElementById('viaje-codigo').value;
     const destino = document.getElementById('viaje-destino').value;
@@ -211,4 +216,12 @@ function eliminarCliente(index) {
 function eliminarViaje(index) {
     listaViajes.splice(index, 1);
     mostrarTablaViajes();
+}
+
+
+// RESERVA
+function agregarReserva() {
+    const clienteReserva = document.getElementById('cliente-nombre').value; // Cliente añadido anteriormente
+    const viajeReserva = document.getElementById('viaje-destino').value; // Destino añadido anteriormente
+    const fechaReserva = Date.now();
 }
