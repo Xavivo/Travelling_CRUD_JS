@@ -71,6 +71,48 @@ let listaClientes = [];
 let listaViajes = [];
 let listaReservas = [];
 
+// Mostrar tabla de clientes
+function mostrarTablaClientes() {
+    // Buscamos el tbody por su id
+    const cuerpoTabla = document.getElementById('tabla-clientes');
+
+    // Lo vaciamos antes que nada
+    cuerpoTabla.innerHTML = "";
+
+    // Creamos las filas
+    listaClientes.forEach((cliente, index) => {
+        const fila = `
+            <tr>
+                <td>${cliente.nombre}</td>
+                <td>${cliente.apellido}</td>
+                <td>${cliente.email}</td>
+                <td>${cliente.telefono}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="eliminarCliente(${index})">Eliminar</button></td>
+            </tr>
+        `;
+        cuerpoTabla.innerHTML += fila;
+    });
+}
+
+// Mostrar tabla de viajes
+function mostrarTablaViajes() {
+    const cuerpoTabla = document.getElementById('tabla-viajes');
+    cuerpoTabla.innerHTML = "";
+
+    listaViajes.forEach((viaje, index) => {
+        const fila = `
+            <tr>
+                <td>${viaje.codigo}</td>
+                <td>${viaje.destino}</td>
+                <td>${viaje.precio} €</td>
+                <td>${viaje.tipo}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="eliminarViaje(${index})">Eliminar</button></td> 
+            </tr>
+        `;
+        cuerpoTabla.innerHTML += fila;
+    });
+}
+
 // Agregar clientes
 function agregarCliente() {
     // Leemos los valores de los inputs usando los id del HTML
@@ -113,29 +155,6 @@ function agregarCliente() {
         alert("El teléfono solo puede contener números.");
         return;
     }
-
-    // Mostrar los clientes agregado
-    function mostrarTablaClientes() {
-        // Buscamos el tbody por su id
-        const cuerpoTabla = document.getElementById('tabla-clientes');
-
-        // Lo vaciamos antes que nada
-        cuerpoTabla.innerHTML = "";
-
-        // Creamos las filas
-        listaClientes.forEach((cliente, index) => {
-            const fila = `
-            <tr>
-                <td>${cliente.nombre}</td>
-                <td>${cliente.apellido}</td>
-                <td>${cliente.email}</td>
-                <td>${cliente.telefono}</td>
-                <td><button class="btn btn-danger btn-sm" onclick="eliminarCliente(${index})">Eliminar</button></td>
-            </tr>
-        `;
-            cuerpoTabla.innerHTML += fila;
-        });
-    }
 }
 
 function agregarViaje() {
@@ -170,25 +189,6 @@ function agregarViaje() {
         nuevoViaje = new Viaje(codigo, destino, precio);
         nuevoViaje.tipo = "Sin paquete";
     }
-
-    // Función para mostrar la tabla
-    function mostrarTablaViajes() {
-        const cuerpoTabla = document.getElementById('tabla-viajes');
-        cuerpoTabla.innerHTML = "";
-
-        listaViajes.forEach((viaje, index) => {
-            const fila = `
-                <tr>
-                    <td>${viaje.codigo}</td>
-                    <td>${viaje.destino}</td>
-                    <td>${viaje.precio} €</td>
-                    <td>${viaje.tipo}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="eliminarViaje(${index})">Eliminar</button></td> 
-                </tr>
-            `;
-            cuerpoTabla.innerHTML += fila;
-    });
-}
 
     // Guardar con push y llamamos al método que lo muestra
     listaViajes.push(nuevoViaje);
