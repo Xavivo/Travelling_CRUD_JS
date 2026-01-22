@@ -66,20 +66,6 @@ class Reserva {
     }
 }
 
-// Crear instancias
-const cliente1 = new Cliente("Ana", "Pérez", "ana.perez@gmail.com", "123456789");
-const vuelo1 = new Vuelo("V001", "París", 200, "Air France", 2.5);
-const hotel1 = new Hotel("H001", "París", 100, 4, "Doble");
-const paquete1 = new Paquete("P001", "París", 280, vuelo1, hotel1);
-
-// Crear una reserva
-const reserva1 = new Reserva(cliente1, paquete1);
-
-console.log(cliente1.getResumen());
-console.log(vuelo1.getInfo());
-console.log(paquete1.getInfo());
-console.log(reserva1.getResumen());
-
 // Variables globales
 let listaClientes = [];
 let listaViajes = [];
@@ -137,13 +123,14 @@ function agregarCliente() {
         cuerpoTabla.innerHTML = "";
 
         // Creamos las filas
-        listaClientes.forEach(cliente => {
+        listaClientes.forEach((cliente, index) => {
             const fila = `
             <tr>
                 <td>${cliente.nombre}</td>
                 <td>${cliente.apellido}</td>
                 <td>${cliente.email}</td>
                 <td>${cliente.telefono}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="eliminarCliente(${index})">Eliminar</button></td>
             </tr>
         `;
             cuerpoTabla.innerHTML += fila;
@@ -163,71 +150,65 @@ function agregarViaje() {
         return;
     }
 
-    let nuevoViaje; // Aquí guardaremos el objeto
-
-    if (tipo === 'vuelo') {
-        const aerolinea = document.getElementById('vuelo-aerolinea').value;
-        const duracion = document.getElementById('vuelo-duracion').value;
-
-        if (aerolinea === "" || duracion === "") {
-            alert("Completa los datos del vuelo.");
-            return;
-        }
-        nuevoViaje = new Vuelo(codigo, destino, precio, aerolinea, duracion);
-
-    } else if (tipo === 'hotel') {
-        const estrellas = document.getElementById('hotel-estrellas').value;
-        const habitacion = document.getElementById('hotel-habitacion').value;
-
-        if (estrellas === "" || habitacion === "") {
-            alert("Completa los datos del hotel.");
-            return;
-        }
-        nuevoViaje = new Hotel(codigo, destino, precio, estrellas, habitacion);
-
-    } else {
-        // Viaje estándar
-        nuevoViaje = new Viaje(codigo, destino, precio);
+    // Validar que se haya seleccionado un tipo de viaje
+    if (tipo === "base") {
+        alert("Debes seleccionar un tipo de viaje (Paquete o Sin paquete).");
+        return;
     }
 
-    // Guardar y mostrar
+    let nuevoViaje; // Aquí guardaremos el viaje que se añada
+
+    if (tipo === 'paquete') {
+        // Para paquetes, usamos la clase Paquete
+        nuevoViaje = new Paquete(codigo, destino, precio, null, null);
+        nuevoViaje.tipo = "Paquete";
+    } else if (tipo === 'sin-paquete') {
+        // Para sin paquete, usamos la clase base Viaje
+        nuevoViaje = new Viaje(codigo, destino, precio);
+        nuevoViaje.tipo = "Sin paquete";
+    } else {
+        nuevoViaje = new Viaje(codigo, destino, precio);
+        nuevoViaje.tipo = "Sin paquete";
+    }
+
+    // Función para mostrar la tabla
+    function mostrarTablaViajes() {
+        const cuerpoTabla = document.getElementById('tabla-viajes');
+        cuerpoTabla.innerHTML = "";
+
+        listaViajes.forEach((viaje, index) => {
+            const fila = `
+                <tr>
+                    <td>${viaje.codigo}</td>
+                    <td>${viaje.destino}</td>
+                    <td>${viaje.precio} €</td>
+                    <td>${viaje.tipo}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="eliminarViaje(${index})">Eliminar</button></td> 
+                </tr>
+            `;
+            cuerpoTabla.innerHTML += fila;
+    });
+}
+
+    // Guardar con push y llamamos al método que lo muestra
     listaViajes.push(nuevoViaje);
     mostrarTablaViajes();
+
+    // Limpiar los inputs
+    document.getElementById('viaje-codigo').value = "";
+    document.getElementById('viaje-destino').value = "";
+    document.getElementById('viaje-precio').value = "";
+    document.getElementById('viaje-tipo').value = "base";
 }
 
-// Mostramos u ocultamos los campos según el select que elija el usuario
-function toggleCamposViaje() {
-    const tipo = document.getElementById('viaje-tipo').value;
-
-    // Ocultamos ambos primero
-    document.getElementById('inputs-vuelo').style.display = 'none';
-    document.getElementById('inputs-hotel').style.display = 'none';
-
-    // Mostramos el que corresponda
-    if (tipo === 'vuelo') {
-        document.getElementById('inputs-vuelo').style.display = 'flex';
-    } else if (tipo === 'hotel') {
-        document.getElementById('inputs-hotel').style.display = 'flex';
-    }
+// Función para eliminar cliente
+function eliminarCliente(index) {
+    listaClientes.splice(index, 1);
+    mostrarTablaClientes();
 }
 
-// Función para mostrar la tabla
-function mostrarTablaViajes() {
-    const cuerpoTabla = document.getElementById('tabla-viajes');
-    cuerpoTabla.innerHTML = "";
-
-    listaViajes.forEach(viaje => {
-        const tipoClase = viaje.constructor.name;
-
-        const fila = `
-            <tr>
-                <td>${viaje.codigo}</td>
-                <td>${viaje.destino}</td>
-                <td>${viaje.precio} €</td>
-                <td>${tipoClase}</td>
-                <td>${viaje.getInfo()}</td> 
-            </tr>
-        `;
-        cuerpoTabla.innerHTML += fila;
-    });
+// Función para eliminar viaje
+function eliminarViaje(index) {
+    listaViajes.splice(index, 1);
+    mostrarTablaViajes();
 }

@@ -8,7 +8,8 @@
   <title>Travel CRUD</title>
 </head>
 
-<body class=" container gap-5 m-5">
+<body class=" container position-absolute top-50 start-50 translate-middle border border-primary rounded bg-secondary.bg-gradient">
+  <section class="bg-light">
   <table class="table table-bordered">
     <h1>Clientes</h1>
     <!--Inputs-->
@@ -21,7 +22,7 @@
         aria-describedby="addon-wrapping" />
       <input type="text" id="cliente-telefono" class="form-control" placeholder="Teléfono" aria-label="Teléfono"
         aria-describedby="addon-wrapping" />
-      <button type="button" class="btn btn-secondary" onclick="agregarCliente()">Añadir cliente</button>
+      <button type="button" class="btn btn-info" onclick="agregarCliente()">Añadir cliente</button>
     </div>
 
     <thead>
@@ -49,24 +50,14 @@
         aria-describedby="addon-wrapping" />
 
       <div class="col-md-1.5">
-        <select id="viaje-tipo" class="form-select" onchange="toggleCamposViaje()">
-          <option value="base">Estándar</option>
-          <option value="vuelo">Vuelo</option>
-          <option value="hotel">Hotel</option>
+        <select id="viaje-tipo" class="form-select">
+          <option value="base">Tipo de viaje</option>
+          <option value="sin-paquete">Sin paquete</option>
+          <option value="paquete">Paquete</option>
         </select>
       </div>
 
-      <div id="inputs-vuelo" style="display: none;" class="gap-2">
-        <input type="text" id="vuelo-aerolinea" class="form-control" placeholder="Aerolínea" />
-        <input type="text" id="vuelo-duracion" class="form-control" placeholder="Duración (horas)" />
-      </div>
-
-      <div id="inputs-hotel" style="display: none;" class="gap-2">
-        <input type="text" id="hotel-estrellas" class="form-control" placeholder="Estrellas" />
-        <input type="text" id="hotel-habitacion" class="form-control" placeholder="Tipo de habitación" />
-      </div>
-
-      <button type="button" class="btn btn-secondary" onclick="agregarViaje()">Añadir viaje</button>
+      <button type="button" class="btn btn-info" onclick="agregarViaje()">Añadir viaje</button>
     </div>
     <thead>
       <tr class="table-dark">
@@ -99,7 +90,7 @@
           <option value="hotel">Prueba2</option>
         </select>
       </div>
-      <button type="button" class="btn btn-secondary" onclick="crearReserva()">Crear reserva</button>
+      <button type="button" class="btn btn-info" onclick="crearReserva()">Crear reserva</button>
     </div>
     <thead>
       <tr class="table-dark">
@@ -112,7 +103,7 @@
     <tbody id="tabla-reservas">
     </tbody>
   </table>
-
+</section>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   <script src="script.js"></script>
 </body>
