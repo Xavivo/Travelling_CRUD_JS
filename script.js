@@ -117,22 +117,27 @@ function mostrarTablaViajes() {
 
 // Mostrar tabla de reservas
 function mostrarTablaReservas() {
-    const cuerpoTabla = document.getElementById('tabla-clientes', 'tabla-viajes');
-    cuerpoTabla.innerHTML = "";
+    const selectCliente = document.getElementById('seleccionar-clientes');
+    const selectViaje = document.getElementById('seleccionar-viajes');
+    selectCliente.innerHTML = "";
+    selectViaje.innerHTML = "";
 
-    listaReservas.forEach((cliente, viaje, fechaReserva, index) => {
+
+
+    listaReservas.forEach((reserva, index) => {
         const fila = `
             <tr>
-                <td>${cliente.nombre}</td>
-                <td>${viaje.destino}</td>
-                <td>${fechaReserva}</td>
-                <td><button class="btn btn-danger btn-sm" onclick="eliminarViaje(${index})">Eliminar</button></td> 
+                <td>${reserva.cliente.nombre}</td>
+                <td>${reserva.viaje.destino}</td>
+                <td>${reserva.fechaReserva}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="eliminarReserva(${index})">Eliminar</button></td> 
             </tr>
         `;
-        cuerpoTabla.innerHTML += fila;
+        selectViaje.innerHTML += fila;
+        selectCliente.innerHTML += fila;
+
     });
 }
-
 
 // CLIENTE
 function agregarCliente() {
@@ -239,6 +244,12 @@ function eliminarViaje(index) {
     mostrarTablaViajes();
 }
 
+function eliminarReserva(index) {
+    listaReservas.splice(index, 1);
+    mostrarTablaReservas();
+
+}
+
 
 // RESERVA
 function agregarReserva() {
@@ -246,15 +257,17 @@ function agregarReserva() {
     const viajeReserva = document.getElementById('viaje-destino').value; // Destino añadido anteriormente
     const fechaReserva = Date.now();
 
+    let nuevoReserva; // Aquí guardaremos la reserva que se añada
+
     // Validaciones
 
     // Comprobamos que no estén vacíos
     if (clienteReserva === "" || viajeReserva === "") {
         alert("Faltan datos básicos de la reserva.");
         return;
+    } else {
+        nuevoReserva = new Reserva (cliente, viaje);
     }
-
-    let nuevoReserva; // Aquí guardaremos la reserva que se añada
 
     listaReservas.push(nuevoReserva);
     mostrarTablaReservas();
