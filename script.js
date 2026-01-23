@@ -240,9 +240,10 @@ function agregarReserva() {
     // pillamos el índice de cada cliente y viaje para identificarlos luego en el desplegable
     const clienteReserva = document.getElementById('seleccionar-cliente').value; // Cliente añadido anteriormente
     const viajeReserva = document.getElementById('seleccionar-viaje').value; // Destino añadido anteriormente
-    const fechaReserva = Date.now();
 
-    let nuevoReserva; // Aquí guardaremos la reserva que se añada
+
+    const objetoCliente = listaClientes[clienteReserva];
+    const objetoViaje = listaViajes[viajeReserva];
 
     // Validaciones
 
@@ -250,9 +251,9 @@ function agregarReserva() {
     if (clienteReserva === "" || viajeReserva === "") {
         alert("Faltan datos básicos de la reserva.");
         return;
-    } else {
-        nuevoReserva = new Reserva (cliente, viaje);
     }
+
+    const nuevoReserva = new Reserva (objetoCliente, objetoViaje);
 
     listaReservas.push(nuevoReserva);
     mostrarTablaReservas();
