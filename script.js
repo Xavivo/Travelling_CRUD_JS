@@ -193,6 +193,7 @@ function agregarViaje() {
         nuevoViaje = new Viaje(codigo, destino, precio);
         nuevoViaje.tipo = "Sin paquete";
     } else {
+        // por defecto usamos sin paquete
         nuevoViaje = new Viaje(codigo, destino, precio);
         nuevoViaje.tipo = "Sin paquete";
     }
