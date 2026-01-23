@@ -197,6 +197,15 @@ function agregarViaje() {
 
 // Función para eliminar cliente
 function eliminarCliente(index) {
+    const cliente = listaClientes[index];
+    // Validamos si el cliente tiene alguna reserva
+    const hasActiveReservation = listaReservas.some(reserva => reserva.cliente === cliente);
+    if (hasActiveReservation) {
+        alert('El usuario tiene una reserva activa, no puede ser eliminado.');
+        return;
+    }
+    // Se procede a eliminarlo si del contrario no tiene reservas activas
+
     listaClientes.splice(index, 1);
     mostrarTablaClientes();
     reservaSelects(); // Actualizar selects antes de borrar
