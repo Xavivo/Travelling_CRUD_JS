@@ -6,41 +6,12 @@ class Viaje {
         this.precio = precio;
         this.disponibilidad = disponibilidad;
     }
-    getInfo() {
-        return `Viaje [${this.codigo}] a ${this.destino}, precio: ${this.precio} euros`;
-    }
-}
-
-class Vuelo extends Viaje {
-    constructor(codigo, destino, precio, aerolinea, duracion) {
-        super(codigo, destino, precio);
-        this.aerolinea = aerolinea;
-        this.duracion = duracion;
-    }
-    getInfo() {
-        return `${super.getInfo()}, Aerolínea: ${this.aerolinea}, Duración: ${this.duracion} horas`;
-    }
-}
-
-class Hotel extends Viaje {
-    constructor(codigo, destino, precio, estrellas, tipoHabitacion) {
-        super(codigo, destino, precio);
-        this.estrellas = estrellas;
-        this.tipoHabitacion = tipoHabitacion;
-    }
-    getInfo() {
-        return `${super.getInfo()}, Hotel ${this.estrellas} estrellas, Habitación: ${this.tipoHabitacion}`;
-    }
 }
 
 class Paquete extends Viaje {
-    constructor(codigo, destino, precio, vuelo, hotel) {
+    constructor(codigo, destino, precio) {
         super(codigo, destino, precio);
-        this.vuelo = vuelo;
-        this.hotel = hotel;
-    }
-    getInfo() {
-        return `${super.getInfo()}\n - Vuelo: ${this.vuelo.getInfo()}\n - Hotel: ${this.hotel.getInfo()}`;
+        this.esPaquete = true; // para verlo mejor
     }
 }
 
@@ -51,18 +22,13 @@ class Cliente {
         this.email = email;
         this.telefono = telefono;
     }
-    getResumen() {
-        return `Cliente: ${this.nombre} ${this.apellido}, Email: ${this.email}, Teléfono: ${this.telefono}`;
-    }
 }
 
 class Reserva {
     constructor(cliente, viaje) {
         this.cliente = cliente;
         this.viaje = viaje;
-    }
-    getResumen() {
-        return `${this.cliente.getResumen()}\nReservó: ${this.viaje.getInfo()}`;
+        this.fechaReserva = new Date().toLocaleDateString();
     }
 }
 
@@ -117,12 +83,8 @@ function mostrarTablaViajes() {
 
 // Mostrar tabla de reservas
 function mostrarTablaReservas() {
-    const selectCliente = document.getElementById('seleccionar-clientes');
-    const selectViaje = document.getElementById('seleccionar-viajes');
-    selectCliente.innerHTML = "";
-    selectViaje.innerHTML = "";
-
-
+    const cuerpoTabla = document.getElementById('tabla-reservas');
+    cuerpoTabla.innerHTML = "";
 
     listaReservas.forEach((reserva, index) => {
         const fila = `
@@ -133,8 +95,7 @@ function mostrarTablaReservas() {
                 <td><button class="btn btn-danger btn-sm" onclick="eliminarReserva(${index})">Eliminar</button></td> 
             </tr>
         `;
-        selectViaje.innerHTML += fila;
-        selectCliente.innerHTML += fila;
+        cuerpoTabla.innerHTML += fila;
 
     });
 }
@@ -236,12 +197,14 @@ function agregarViaje() {
 function eliminarCliente(index) {
     listaClientes.splice(index, 1);
     mostrarTablaClientes();
+    reservaSelects(); // Actualizar selects antes de borrar
 }
 
 // Función para eliminar viaje
 function eliminarViaje(index) {
     listaViajes.splice(index, 1);
     mostrarTablaViajes();
+    reservaSelects(); // Actualizar selects antes de borrar
 }
 
 function eliminarReserva(index) {
@@ -252,9 +215,31 @@ function eliminarReserva(index) {
 
 
 // RESERVA
+
+function reservaSelects() {
+    const selectCliente = document.getElementById('seleccionar-cliente');
+    const selectViaje = document.getElementById('seleccionar-viaje');
+
+    // Limpiamos y dejamos la opción por defecto
+    selectCliente.innerHTML = '<option value="">Seleccionar cliente</option>';
+    selectViaje.innerHTML = '<option value="">Seleccionar viaje</option>';
+
+    // Rellenamos con los clientes reales
+    // "value" será el índice para saber cuál elegir luego
+    listaClientes.forEach((cliente, index) => {
+        selectCliente.innerHTML += `<option value="${index}">${cliente.nombre} ${cliente.apellido}</option>`;
+    });
+
+    // Rellenamos con los viajes reales
+    listaViajes.forEach((viaje, index) => {
+        selectViaje.innerHTML += `<option value="${index}">${viaje.destino} (${viaje.precio}€)</option>`;
+    });
+}
+
 function agregarReserva() {
-    const clienteReserva = document.getElementById('cliente-nombre').value; // Cliente añadido anteriormente
-    const viajeReserva = document.getElementById('viaje-destino').value; // Destino añadido anteriormente
+    // pillamos el índice de cada cliente y viaje para identificarlos luego en el desplegable
+    const clienteReserva = document.getElementById('seleccionar-cliente').value; // Cliente añadido anteriormente
+    const viajeReserva = document.getElementById('seleccionar-viaje').value; // Destino añadido anteriormente
     const fechaReserva = Date.now();
 
     let nuevoReserva; // Aquí guardaremos la reserva que se añada
