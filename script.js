@@ -37,6 +37,38 @@ let listaClientes = [];
 let listaViajes = [];
 let listaReservas = [];
 
+// Persistencia en el local storage
+function guardarDatos() {
+    localStorage.setItem('listaClientes', JSON.stringify(listaClientes));
+    localStorage.setItem('listaViajes', JSON.stringify(listaViajes));
+    localStorage.setItem('listaReservas', JSON.stringify(listaReservas));
+}
+
+function cargarDatos() {
+    const clientesGuardados = localStorage.getItem('listaClientes');
+    const viajesGuardados = localStorage.getItem('listaViajes');
+    const reservasGuardadas = localStorage.getItem('listaReservas');
+
+    if (clientesGuardados) {
+        listaClientes = JSON.parse(clientesGuardados);
+    }
+    if (viajesGuardados) {
+        listaViajes = JSON.parse(viajesGuardados);
+    }
+    if (reservasGuardadas) {
+        listaReservas = JSON.parse(reservasGuardadas);
+    }
+
+    // Mostrar las tablas con los datos cargados
+    mostrarTablaClientes();
+    mostrarTablaViajes();
+    mostrarTablaReservas();
+    reservaSelects();
+}
+
+// Cargar datos al iniciar la página
+window.addEventListener('DOMContentLoaded', cargarDatos);
+
 // Anotación: las 3 funciones mostrar están definidas aquí ya que, estando dentro de sus respectivas funciones de agregar no los encontraba.
 
 // Mostrar tabla de clientes
@@ -121,6 +153,7 @@ function agregarCliente() {
 
         mostrarTablaClientes();
         reservaSelects();
+        guardarDatos();
 
         document.getElementById('cliente-nombre').value = "";
         document.getElementById('cliente-apellido').value = "";
@@ -178,7 +211,7 @@ function agregarViaje() {
         nuevoViaje = new Viaje(codigo, destino, precio);
         nuevoViaje.tipo = "Sin paquete";
     } else {
-        // por defecto usamos sin paquete
+        // Por defecto usamos sin paquete
         nuevoViaje = new Viaje(codigo, destino, precio);
         nuevoViaje.tipo = "Sin paquete";
     }
@@ -187,6 +220,7 @@ function agregarViaje() {
     listaViajes.push(nuevoViaje);
     mostrarTablaViajes();
     reservaSelects(); // importante
+    guardarDatos();
 
     // Limpiar los inputs
     document.getElementById('viaje-codigo').value = "";
@@ -209,6 +243,7 @@ function eliminarCliente(index) {
     listaClientes.splice(index, 1);
     mostrarTablaClientes();
     reservaSelects(); // Actualizar selects antes de borrar
+    guardarDatos();
 }
 
 // Función para eliminar viaje
@@ -216,13 +251,14 @@ function eliminarViaje(index) {
     listaViajes.splice(index, 1);
     mostrarTablaViajes();
     reservaSelects(); // Actualizar selects antes de borrar
+    guardarDatos();
 }
 
 // Función para eliminar reserva
 function eliminarReserva(index) {
     listaReservas.splice(index, 1);
     mostrarTablaReservas();
-
+    guardarDatos();
 }
 
 
@@ -267,7 +303,7 @@ function agregarReserva() {
 
     listaReservas.push(nuevoReserva);
     mostrarTablaReservas();
-
+    guardarDatos();
 }
 
 // Nota: arreglar bootstrap para cuando se añaden demasiadas tablas (no se puede subir a ver clientes)
