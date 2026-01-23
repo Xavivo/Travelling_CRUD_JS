@@ -238,5 +238,8 @@ function agregarReserva() {
 
     let nuevoReserva; // Aquí guardaremos la reserva que se añada
 
+    listaReservas.push(nuevoReserva);
+    mostrarTablaReservas();
+
 }
 
