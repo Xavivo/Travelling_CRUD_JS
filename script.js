@@ -120,6 +120,7 @@ function agregarCliente() {
         listaClientes.push(nuevoCliente);
 
         mostrarTablaClientes();
+        reservaSelects();
 
         document.getElementById('cliente-nombre').value = "";
         document.getElementById('cliente-apellido').value = "";
@@ -170,7 +171,7 @@ function agregarViaje() {
 
     if (tipo === 'paquete') {
         // Para paquetes, usamos la clase paquete
-        nuevoViaje = new Paquete(codigo, destino, precio, null, null);
+        nuevoViaje = new Paquete(codigo, destino, precio);
         nuevoViaje.tipo = "Paquete";
     } else if (tipo === 'sin-paquete') {
         // Para sin paquete, usamos la clase base viaje
@@ -185,6 +186,7 @@ function agregarViaje() {
     // Guardar con push y llamamos al método que lo muestra
     listaViajes.push(nuevoViaje);
     mostrarTablaViajes();
+    reservaSelects(); // importante
 
     // Limpiar los inputs
     document.getElementById('viaje-codigo').value = "";
@@ -215,7 +217,6 @@ function eliminarReserva(index) {
 
 
 // RESERVA
-
 function reservaSelects() {
     const selectCliente = document.getElementById('seleccionar-cliente');
     const selectViaje = document.getElementById('seleccionar-viaje');
@@ -225,7 +226,6 @@ function reservaSelects() {
     selectViaje.innerHTML = '<option value="">Seleccionar viaje</option>';
 
     // Rellenamos con los clientes reales
-    // "value" será el índice para saber cuál elegir luego
     listaClientes.forEach((cliente, index) => {
         selectCliente.innerHTML += `<option value="${index}">${cliente.nombre} ${cliente.apellido}</option>`;
     });
