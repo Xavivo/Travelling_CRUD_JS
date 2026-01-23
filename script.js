@@ -209,6 +209,7 @@ function eliminarViaje(index) {
     reservaSelects(); // Actualizar selects antes de borrar
 }
 
+// Función para eliminar reserva
 function eliminarReserva(index) {
     listaReservas.splice(index, 1);
     mostrarTablaReservas();
