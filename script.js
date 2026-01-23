@@ -260,3 +260,4 @@ function agregarReserva() {
 
 }
 
+// Nota: arreglar bootstrap para cuando se añaden demasiadas tablas (no se puede subir a ver clientes)
