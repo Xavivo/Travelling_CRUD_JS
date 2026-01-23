@@ -71,7 +71,7 @@ let listaClientes = [];
 let listaViajes = [];
 let listaReservas = [];
 
-// Anotación: ambas funciones mostrar están definidas aquí ya que, estando dentro de ambas funciones agregar no los encontraba.
+// Anotación: las 3 funciones mostrar están definidas aquí ya que, estando dentro de sus respectivas funciones de agregar no los encontraba.
 
 // Mostrar tabla de clientes
 function mostrarTablaClientes() {
@@ -108,6 +108,24 @@ function mostrarTablaViajes() {
                 <td>${viaje.destino}</td>
                 <td>${viaje.precio} €</td>
                 <td>${viaje.tipo}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="eliminarViaje(${index})">Eliminar</button></td> 
+            </tr>
+        `;
+        cuerpoTabla.innerHTML += fila;
+    });
+}
+
+// Mostrar tabla de reservas
+function mostrarTablaReservas() {
+    const cuerpoTabla = document.getElementById('tabla-clientes', 'tabla-viajes');
+    cuerpoTabla.innerHTML = "";
+
+    listaReservas.forEach((cliente, viaje, fechaReserva, index) => {
+        const fila = `
+            <tr>
+                <td>${cliente.nombre}</td>
+                <td>${viaje.destino}</td>
+                <td>${fechaReserva}</td>
                 <td><button class="btn btn-danger btn-sm" onclick="eliminarViaje(${index})">Eliminar</button></td> 
             </tr>
         `;
